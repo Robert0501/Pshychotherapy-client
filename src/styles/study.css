@@ -10,8 +10,6 @@
 .study {
   border-radius: 10px;
   padding: 1%;
-  width: 100%; /* Take full width of the container */
-  max-width: 500px; /* Optional: Limit the maximum width */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -39,4 +37,12 @@
 
 .study--year {
   color: #8b8989;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #ddd; /* Culoare gri deschis pentru linie */
+  width: 100%; /* Asigură-te că ocupă întreaga lățime */
+  margin: 16px 0; /* Adaugă spațiu în jurul liniei */
 }

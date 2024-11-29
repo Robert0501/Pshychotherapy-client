@@ -10,7 +10,9 @@ function StudyCard(props: StudyCardProps) {
   return (
     <div className="study">
       <p className="study--title">{props.title}</p>
+      <hr />
       <p>{props.description}</p>
+      <hr />
       <p className="study--year">{props.year}</p>
     </div>
   );

@@ -84,12 +84,7 @@ function Header() {
           focused={focusedTabIndex === 3}
           onClick={() => handleTabClick(3, '/awards')}
         />
-        <HeaderTab
-          tabName={t('header.feedback')}
-          icon={ReviewsIcon}
-          focused={focusedTabIndex === 4}
-          onClick={() => handleTabClick(4, '/feedback')}
-        />
+
         <HeaderTab
           tabName={t('header.articles')}
           icon={ArticlesIcon}

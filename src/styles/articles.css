@@ -1,0 +1,72 @@
+/* Cardul pentru articol */
+.article-card {
+  background-color: #fff;
+  width: 90%; /* Sau o lățime fixă, de exemplu 800px */
+  max-width: 800px; /* Poți seta o lățime maximă pentru a controla dimensiunea */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrează conținutul pe axa orizontală */
+  justify-content: space-between;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.article-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* Titlul articolului */
+.article-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center; /* Centrează textul pe orizontală */
+  width: 100%; /* Asigură-te că titlul ocupă întreaga lățime a cardului */
+  padding-bottom: 10px;
+}
+
+/* Data articolului */
+.article-date {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Descrierea articolului */
+.article-description {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: justify; /* Aliniază descrierea la stânga și dreapta */
+}
+
+/* Stilizarea liniei <hr /> din interiorul .article-card */
+.article-card hr {
+  border: none;
+  height: 1px;
+  background-color: #ddd; /* Culoare gri deschis pentru linie */
+  width: 100%; /* Asigură-te că ocupă întreaga lățime */
+  margin: 16px 0; /* Adaugă spațiu în jurul liniei */
+}
+
+/* Butonul de "Citește mai mult" */
+.read-more-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.read-more-button:hover {
+  background-color: #0056b3;
+}
