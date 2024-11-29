@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Pshychotherapy-client/static/css/main.de01c77b.css",
+    "main.css": "/Pshychotherapy-client/static/css/main.afc465ee.css",
     "main.js": "/Pshychotherapy-client/static/js/main.8d112995.js",
     "static/js/453.42fe8253.chunk.js": "/Pshychotherapy-client/static/js/453.42fe8253.chunk.js",
     "static/media/logo.png": "/Pshychotherapy-client/static/media/logo.6e4c8f4135d3c22ec0eb.png",
@@ -18,12 +18,12 @@
     "static/media/articles.svg": "/Pshychotherapy-client/static/media/articles.a352457f5276d21602d4c5e0f23e6c03.svg",
     "static/media/email.svg": "/Pshychotherapy-client/static/media/email.cf2475ede0a132ffbc1b27271b5b12b6.svg",
     "static/media/burger.svg": "/Pshychotherapy-client/static/media/burger.444d0e11927b4093fcb9984b421bfade.svg",
-    "main.de01c77b.css.map": "/Pshychotherapy-client/static/css/main.de01c77b.css.map",
+    "main.afc465ee.css.map": "/Pshychotherapy-client/static/css/main.afc465ee.css.map",
     "main.8d112995.js.map": "/Pshychotherapy-client/static/js/main.8d112995.js.map",
     "453.42fe8253.chunk.js.map": "/Pshychotherapy-client/static/js/453.42fe8253.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.de01c77b.css",
+    "static/css/main.afc465ee.css",
     "static/js/main.8d112995.js"
   ]
 }
