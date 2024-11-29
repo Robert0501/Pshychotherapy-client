@@ -1,0 +1,52 @@
+.contact-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.contact-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%; /* Take full width of the container */
+  max-width: 500px; /* Optional: Limit the maximum width */
+  text-decoration: none; /* Remove underline for link elements */
+  color: #333;
+  cursor: pointer; /* Make the whole container clickable if needed */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease; /* Smooth transition for transform and shadow */
+}
+
+.contact-container:hover {
+  transform: scale(1.05); /* Slightly scale up the card */
+  cursor: pointer;
+}
+
+.contact-logo {
+  width: 40px;
+  height: 40px;
+  fill: currentColor;
+  background-color: #d3d3d3;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.contact-text p {
+  margin: 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.contact-container a,
+.contact-container .contact-text a {
+  color: #333;
+  text-decoration: none;
+}
+
+.contact-container:hover .contact-logo {
+  background-color: #b0b0b0; /* Slightly darker gray on hover */
+}

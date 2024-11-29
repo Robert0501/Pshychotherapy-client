@@ -1,0 +1,109 @@
+/* Ensure consistent alignment and spacing */
+.header-container {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2px;
+  border-bottom: 2px solid #ccc;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 1000;
+  transition: 0.3s;
+}
+
+.header-logo {
+  height: 50px;
+}
+
+.burger-menu {
+  display: none; /* Hide by default, show on small screens */
+  cursor: pointer;
+}
+
+.menu-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 40px;
+
+  width: 100%;
+  transition: 0.3s;
+}
+
+.menu-items.open {
+  display: block; /* Show menu when the burger is clicked */
+}
+
+.header-tab {
+  display: flex;
+  align-items: center; /* Vertically center the icon and text */
+  justify-content: flex-start; /* Align the items to the left */
+  padding: 10px;
+  transition:
+    color 0.3s ease,
+    border-bottom 0.3s ease;
+  width: 100%; /* Ensure the tab takes up available space */
+  box-sizing: border-box; /* Include padding in the width calculation */
+}
+
+.header-tab .header-icon {
+  width: 24px;
+  height: auto;
+  margin-right: 8px; /* Space between icon and text */
+  fill: currentColor;
+  transition:
+    transform 0.3s ease,
+    fill 0.3s ease;
+}
+
+.header-tab:hover,
+.header-tab--focused {
+  cursor: pointer;
+  color: #ffa83f;
+}
+
+.header-tab:hover .header-icon {
+  transform: scale(1.1);
+  fill: currentColor;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 900px) {
+  .burger-menu {
+    display: block; /* Show the burger menu on small screens */
+    padding: 10px;
+  }
+
+  /* Style for the burger icon */
+  .burger-menu svg {
+    fill: #000; /* Make the burger icon black */
+  }
+
+  /* Other styles remain the same */
+
+  .menu-items {
+    display: none; /* Hide the menu by default on small screens */
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #fff;
+    width: 100%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+  }
+
+  .menu-items.open {
+    display: flex; /* Show the menu when it's toggled open */
+  }
+
+  .header-tab {
+    width: 100%;
+    text-align: left;
+    padding: 15px;
+  }
+}

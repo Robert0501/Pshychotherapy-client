@@ -1,0 +1,42 @@
+.container--study {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch; /* Stretch all cards to be the same height */
+  flex-wrap: wrap;
+  gap: 20px; /* Add space between cards */
+}
+
+.study {
+  border-radius: 10px;
+  padding: 1%;
+  width: 100%; /* Take full width of the container */
+  max-width: 500px; /* Optional: Limit the maximum width */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box; /* Ensure padding doesn't affect size */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease; /* Smooth transition for transform and shadow */
+}
+
+/* Hover effect */
+.study:hover {
+  transform: scale(1.05); /* Slightly scale up the card */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow to make it pop */
+  cursor: pointer;
+}
+
+.study--title {
+  font-weight: bold;
+  font-size: larger;
+}
+
+.study--year {
+  color: #8b8989;
+}
