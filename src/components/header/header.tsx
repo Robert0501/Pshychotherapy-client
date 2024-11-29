@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
-import { ReactComponent as BurgerIcon } from '../../assets/icons/burger.svg'; // Import a burger icon SVG
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ReactComponent as BurgerIcon } from '../../assets/icons/burger.svg';
 
 import AppLogo from '../../assets/logo.png';
 import { ReactComponent as AboutMeIcon } from '../../assets/icons/about-me.svg';
@@ -16,19 +16,30 @@ import { useTranslation } from 'react-i18next';
 
 function Header() {
   const { t } = useTranslation();
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate();
 
-  // Track the index of the focused tab (e.g., 0 for About Me, 1 for Contact, etc.)
+  // UseEffect pentru a încărca indexul tab-ului selectat din localStorage
   const [focusedTabIndex, setFocusedTabIndex] = useState<number | null>(null);
 
   // Track whether the menu is open or closed
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // La încărcarea componentelor, verificăm dacă avem o valoare în localStorage
+  useEffect(() => {
+    const savedTabIndex = localStorage.getItem('focusedTabIndex');
+    if (savedTabIndex) {
+      setFocusedTabIndex(Number(savedTabIndex)); // Setăm indexul salvat
+    }
+  }, []);
 
   // Handle tab clicks and navigate
   const handleTabClick = (index: number, route: string) => {
     setFocusedTabIndex(index); // Set the clicked tab as focused
     navigate(route); // Navigate to the specified route
     setMenuOpen(false);
+
+    // Salvăm indexul în localStorage
+    localStorage.setItem('focusedTabIndex', String(index));
   };
 
   // Toggle the burger menu visibility

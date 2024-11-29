@@ -2,7 +2,12 @@ import React from 'react';
 import Header from './components/header/header.tsx';
 
 import './i18n.js';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import {
+  Route,
+  BrowserRouter as Router,
+  Routes,
+  Navigate,
+} from 'react-router-dom';
 import AboutMePage from './components/about-me/about-me.tsx';
 import ContactPage from './pages/contact/contact.tsx';
 import ServicePage from './pages/services/services.tsx';
@@ -16,7 +21,8 @@ function App() {
       <Header />
       <div className="container">
         <Routes>
-          <Route path="" element={<AboutMePage />} />
+          {/* Ruta implicită care redirecționează automat la /prezentare */}
+          <Route path="/" element={<Navigate to="/prezentare" />} />
           <Route path="/prezentare" element={<AboutMePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/services" element={<ServicePage />} />
