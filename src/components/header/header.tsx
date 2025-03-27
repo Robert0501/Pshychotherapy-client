@@ -7,8 +7,8 @@ import { ReactComponent as AboutMeIcon } from '../../assets/icons/about-me.svg';
 import { ReactComponent as ContactIcon } from '../../assets/icons/contact.svg';
 import { ReactComponent as ServicesIcon } from '../../assets/icons/services.svg';
 import { ReactComponent as AwardsIcon } from '../../assets/icons/awards.svg';
-import { ReactComponent as ReviewsIcon } from '../../assets/icons/review.svg';
 import { ReactComponent as ArticlesIcon } from '../../assets/icons/articles.svg';
+import { ReactComponent as LogoutIcon } from '../../assets/icons/logout.svg';
 
 import '../../styles/header.css';
 import HeaderTab from './header.tab.tsx';
@@ -18,81 +18,111 @@ function Header() {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  // UseEffect pentru a încărca indexul tab-ului selectat din localStorage
+  const isAuthenticated = localStorage.getItem('access_token');
+
   const [focusedTabIndex, setFocusedTabIndex] = useState<number | null>(null);
 
-  // Track whether the menu is open or closed
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // La încărcarea componentelor, verificăm dacă avem o valoare în localStorage
   useEffect(() => {
     const savedTabIndex = localStorage.getItem('focusedTabIndex');
     if (savedTabIndex) {
-      setFocusedTabIndex(Number(savedTabIndex)); // Setăm indexul salvat
+      setFocusedTabIndex(Number(savedTabIndex));
+    } else {
+      setFocusedTabIndex(0);
     }
   }, []);
 
-  // Handle tab clicks and navigate
   const handleTabClick = (index: number, route: string) => {
-    setFocusedTabIndex(index); // Set the clicked tab as focused
-    navigate(route); // Navigate to the specified route
+    setFocusedTabIndex(index);
+    navigate(route);
     setMenuOpen(false);
 
-    // Salvăm indexul în localStorage
     localStorage.setItem('focusedTabIndex', String(index));
   };
 
-  // Toggle the burger menu visibility
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const handleLogoutButton = () => {
+    localStorage.clear();
+    handleTabClick(0, '/prezentare');
+  };
+
   return (
-    <nav className="header-container">
-      <div className="header-logo">
-        <img src={AppLogo} className="header-logo" alt="Logo" />
-      </div>
+    <>
+      <nav className="header-container">
+        <div className="header-logo">
+          <img src={AppLogo} className="header-logo" alt="Logo" />
+        </div>
 
-      {/* Burger menu icon (visible on small screens) */}
-      <div className="burger-menu" onClick={toggleMenu}>
-        <BurgerIcon />
-      </div>
+        <div className="burger-menu" onClick={toggleMenu}>
+          <BurgerIcon />
+        </div>
 
-      {/* Main menu (visible on larger screens or when menu is open on small screens) */}
-      <div className={`menu-items ${menuOpen ? 'open' : ''}`}>
-        <HeaderTab
-          tabName={t('header.about_me')}
-          icon={AboutMeIcon}
-          focused={focusedTabIndex === 0}
-          onClick={() => handleTabClick(0, '/prezentare')}
-        />
-        <HeaderTab
-          tabName={t('header.contact')}
-          icon={ContactIcon}
-          focused={focusedTabIndex === 1}
-          onClick={() => handleTabClick(1, '/contact')}
-        />
-        <HeaderTab
-          tabName={t('header.services')}
-          icon={ServicesIcon}
-          focused={focusedTabIndex === 2}
-          onClick={() => handleTabClick(2, '/services')}
-        />
-        <HeaderTab
-          tabName={t('header.awards')}
-          icon={AwardsIcon}
-          focused={focusedTabIndex === 3}
-          onClick={() => handleTabClick(3, '/awards')}
-        />
-
-        <HeaderTab
-          tabName={t('header.articles')}
-          icon={ArticlesIcon}
-          focused={focusedTabIndex === 5}
-          onClick={() => handleTabClick(5, '/articles')}
-        />
-      </div>
-    </nav>
+        <div className={`menu-items ${menuOpen ? 'open' : ''}`}>
+          <HeaderTab
+            tabName={t('header.about_me')}
+            icon={AboutMeIcon}
+            focused={focusedTabIndex === 0}
+            onClick={() => handleTabClick(0, '/prezentare')}
+          />
+          <HeaderTab
+            tabName={!isAuthenticated ? t('header.contact') : 'SERVICII'}
+            icon={ContactIcon}
+            focused={focusedTabIndex === 1}
+            onClick={() =>
+              handleTabClick(
+                1,
+                `${!isAuthenticated ? '/contact' : '/admin/servicii'}`
+              )
+            }
+          />
+          <HeaderTab
+            tabName={!isAuthenticated ? t('header.services') : 'PROGRAMARI'}
+            icon={ServicesIcon}
+            focused={focusedTabIndex === 2}
+            onClick={() =>
+              handleTabClick(
+                2,
+                `${!isAuthenticated ? '/servicii' : '/admin/programari'}`
+              )
+            }
+          />
+          <HeaderTab
+            tabName={t('header.awards')}
+            icon={AwardsIcon}
+            focused={focusedTabIndex === 3}
+            onClick={() =>
+              handleTabClick(
+                3,
+                `${!isAuthenticated ? '/pregatire' : '/admin/pregatire'}`
+              )
+            }
+          />
+          <HeaderTab
+            tabName={t('header.articles')}
+            icon={ArticlesIcon}
+            focused={focusedTabIndex === 4}
+            onClick={() =>
+              handleTabClick(
+                4,
+                `${!isAuthenticated ? '/articole' : '/admin/articole'}`
+              )
+            }
+          />
+          {isAuthenticated && (
+            <HeaderTab
+              tabName="Logout"
+              icon={LogoutIcon}
+              focused={focusedTabIndex === 5}
+              onClick={handleLogoutButton}
+            />
+          )}
+        </div>
+      </nav>
+    </>
   );
 }
 

@@ -6,48 +6,100 @@ import { ReactComponent as PriceIcon } from '../../assets/icons/payment.svg';
 import { ReactComponent as DurationIcon } from '../../assets/icons/clock.svg';
 
 import SchedulePopup from '../pop-up/schedule.popup.tsx';
+import ConfirmationPopup from '../pop-up/confirmation.popup.tsx';
+import EditServicePopup from '../../components/pop-up/edit.service.popup.tsx';
 
 interface ServiceCardProps {
   serviceCard: ServiceModel;
 }
 
-function ServiceCard(props: ServiceCardProps) {
+const ServiceCard: React.FC<ServiceCardProps> = ({ serviceCard }) => {
   const { t } = useTranslation();
 
-  const [isPopupOpened, setPopupOpened] = useState(false);
+  const [isSchedulePopupOpen, setIsSchedulePopupOpen] = useState(false);
+  const [isEditPopupOpen, setIsEditPopupOpen] = useState(false); // New state
+  const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
+  const [confirmationPopup, setConfirmationPopup] = useState({
+    title: '',
+    text: '',
+  });
 
-  const openPopup = () => {
-    setPopupOpened(true);
-  };
+  const isAuthenticated = localStorage.getItem('access_token');
 
-  const closePopup = () => {
-    setPopupOpened(false);
-  };
+  const toggleSchedulePopup = (isOpen: boolean) =>
+    setIsSchedulePopupOpen(isOpen);
+  const toggleEditPopup = (isOpen: boolean) => setIsEditPopupOpen(isOpen); // New function
+  const toggleConfirmationPopup = (isOpen: boolean) =>
+    setIsConfirmationPopupOpen(isOpen);
 
-  const handleFormSubmit = (formData) => {
-    console.log('Form submitter with data: ', formData);
-    alert(
-      `Vizita pentru ${props.serviceCard.title} a fost inregistrata, terapeutul o sa va contacteze pentru a stabili data si ora`
-    );
-    closePopup();
+  const handleFormSubmit = async (formData: any) => {
+    try {
+      const response = await fetch('https://localhost:7053/api/Appointment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setConfirmationPopup({
+          title: t('confirmation.successTitle'),
+          text: t('confirmation.successText'),
+        });
+        return;
+      }
+
+      const responseJson = await response.json();
+      const errorDetails = responseJson.details;
+
+      const errorMappings: Record<string, { title: string; text: string }> = {
+        AppointmentExists: {
+          title: t('confirmation.conflictTitle'),
+          text: t('confirmation.conflictText'),
+        },
+        InvalidEmail: {
+          title: t('confirmation.invalidEmailTitle'),
+          text: t('confirmation.invalidEmailText'),
+        },
+        InvalidPhone: {
+          title: t('confirmation.invalidPhoneTitle'),
+          text: t('confirmation.invalidPhoneText'),
+        },
+      };
+
+      if (errorDetails && errorMappings[errorDetails]) {
+        setConfirmationPopup(errorMappings[errorDetails]);
+      } else {
+        throw new Error(t('confirmation.genericError'));
+      }
+    } catch (error) {
+      setConfirmationPopup({
+        title: t('confirmation.errorTitle'),
+        text: t('confirmation.genericError'),
+      });
+    } finally {
+      toggleSchedulePopup(false);
+      toggleConfirmationPopup(true);
+    }
   };
 
   return (
     <>
       <div className="card">
-        <h2 className="title">{props.serviceCard.title}</h2>
+        <h2 className="title">{serviceCard.title}</h2>
         <hr />
         <div className="info">
           <div className="info-item">
             <DurationIcon className="icon" />
             <span className="label">{t('services.duration')}</span>
-            <span className="value">{props.serviceCard.duration}</span>
+            <span className="value">{serviceCard.duration}</span>
           </div>
           <div className="info-item">
             <PriceIcon className="icon" />
             <span className="label">{t('services.price')}</span>
             <span className="value">
-              {props.serviceCard.price} {t('services.currency')}
+              {serviceCard.price} {t('services.currency')}
             </span>
           </div>
         </div>
@@ -55,7 +107,7 @@ function ServiceCard(props: ServiceCardProps) {
         <div className="objectives">
           <h3 className="section-title">{t('services.primary_objectives')}</h3>
           <ul className="objective-list primary">
-            {props.serviceCard.primaryObjectives.map((objective, index) => (
+            {serviceCard.primaryObjectives.map((objective, index) => (
               <li className="objective" key={index}>
                 {objective}
               </li>
@@ -63,10 +115,10 @@ function ServiceCard(props: ServiceCardProps) {
           </ul>
 
           <h3 className="section-title">
-            {t('services.secundary_objectives')}
+            {t('services.secondary_objectives')}
           </h3>
           <ul className="objective-list secondary">
-            {props.serviceCard.secundaryObjectives.map((objective, index) => (
+            {serviceCard.secondaryObjectives.map((objective, index) => (
               <li className="objective" key={index}>
                 {objective}
               </li>
@@ -75,20 +127,46 @@ function ServiceCard(props: ServiceCardProps) {
         </div>
         <hr />
         <div className="schedule-container">
-          <button className="schedule-btn" onClick={openPopup}>
-            Programează o vizită
+          <button
+            className="schedule-btn"
+            onClick={() =>
+              isAuthenticated
+                ? toggleEditPopup(true)
+                : toggleSchedulePopup(true)
+            }
+          >
+            {isAuthenticated ? 'Editează' : t('services.scheduleVisit')}
           </button>
         </div>
       </div>
-      {isPopupOpened && (
+
+      {isSchedulePopupOpen && (
         <SchedulePopup
-          isOpen={isPopupOpened}
-          onClose={closePopup}
+          isOpen={isSchedulePopupOpen}
+          onClose={() => toggleSchedulePopup(false)}
           onSubmit={handleFormSubmit}
+          theraphy={serviceCard.title}
+        />
+      )}
+
+      {isEditPopupOpen && (
+        <EditServicePopup
+          isOpen={isEditPopupOpen}
+          onClose={() => toggleEditPopup(false)}
+          serviceData={serviceCard} // Pass existing service data to the edit form
+        />
+      )}
+
+      {isConfirmationPopupOpen && (
+        <ConfirmationPopup
+          isOpen={isConfirmationPopupOpen}
+          onClose={() => toggleConfirmationPopup(false)}
+          title={confirmationPopup.title}
+          text={confirmationPopup.text}
         />
       )}
     </>
   );
-}
+};
 
 export default ServiceCard;

@@ -46,6 +46,7 @@
   color: #333;
   margin-bottom: 20px;
   text-align: justify; /* Aliniază descrierea la stânga și dreapta */
+  white-space: pre-line;
 }
 
 /* Stilizarea liniei <hr /> din interiorul .article-card */

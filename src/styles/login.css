@@ -1,0 +1,102 @@
+/* Login Container */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
+}
+
+/* Heading */
+.login-heading {
+  font-size: 2.5rem;
+  color: #2d2d2d;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Main Form Container */
+.login-form {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Form Input Fields */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-size: 1.1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.form-input {
+  padding: 12px 16px;
+  font-size: 1.1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9fafb;
+  outline: none;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box; /* Ensures padding and border are included in width calculation */
+}
+
+.form-input:focus {
+  border-color: #5c6bc0;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(92, 107, 192, 0.4);
+}
+
+/* Submit Button */
+.submit-button {
+  padding: 12px 16px; /* Slightly adjusted padding for a balanced look */
+  font-size: 1.1rem;
+  background-color: #5c6bc0;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+  width: 100%;
+  box-sizing: border-box; /* Ensures padding and border are included in width calculation */
+}
+
+.submit-button:hover {
+  background-color: #3f4c9d;
+  transform: scale(1.05);
+}
+
+/* Button Focus/Accessibility */
+.submit-button:focus {
+  outline: 2px solid #5c6bc0;
+  outline-offset: 4px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+  .login-heading {
+    font-size: 2rem;
+  }
+
+  .login-form {
+    padding: 30px;
+  }
+}

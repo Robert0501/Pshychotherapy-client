@@ -1,19 +1,17 @@
 import React from 'react';
+import StudyModel from '../../models/models/study-model';
 
-interface StudyCardProps {
-  title: string;
-  description: string;
-  year: string;
-}
-
-function StudyCard(props: StudyCardProps) {
+function StudyCard(props: StudyModel) {
   return (
     <div className="study">
       <p className="study--title">{props.title}</p>
       <hr />
-      <p>{props.description}</p>
+      <p>{props.authority}</p>
       <hr />
-      <p className="study--year">{props.year}</p>
+      <p className="study--year">
+        {props.dateStarted !== props.dateCompleted ? `${props.dateStarted} - ${props.dateCompleted}` : `${props.dateCompleted}`}
+      </p>
+
     </div>
   );
 }

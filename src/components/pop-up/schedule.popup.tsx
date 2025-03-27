@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../styles/pop-up.css';
 
-function SchedulePopup({ isOpen, onClose, onSubmit }) {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+function SchedulePopup({ isOpen, onClose, onSubmit, theraphy }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -13,7 +11,7 @@ function SchedulePopup({ isOpen, onClose, onSubmit }) {
       name: formData.get('name'),
       email: formData.get('email'),
       phone: formData.get('phone'),
-      date: selectedDate,
+      theraphy: theraphy
     };
     onSubmit(data);
   };
@@ -26,8 +24,8 @@ function SchedulePopup({ isOpen, onClose, onSubmit }) {
         <button className="close-button" onClick={onClose}>
           ×
         </button>
-        <h2>Programeaza o vizita</h2>
-        <form onSubmit={handleSubmit}>
+        <h2 className='modal-title'>Programeaza o vizita</h2>
+        <form onSubmit={handleSubmit} className='form-container'>
           <div className="form-group">
             <label htmlFor="name">Nume:</label>
             <input type="text" name="name" id="name" required />
@@ -40,21 +38,6 @@ function SchedulePopup({ isOpen, onClose, onSubmit }) {
             <label htmlFor="phone">Telefon:</label>
             <input type="text" name="phone" id="phone" required />
           </div>
-          <div className="form-group">
-            <label htmlFor="date">Data:</label>
-            <DatePicker
-              selected={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
-              minDate={new Date()}
-              showMonthDropdown
-              showYearDropdown
-              dropdownMode="select"
-              dateFormat="yyyy-MM-dd"
-              placeholderText="Selecteaza data"
-              className="datepicker-input"
-            />
-          </div>
-
           <button type="submit" className="submit-button">
             Programeaza
           </button>
